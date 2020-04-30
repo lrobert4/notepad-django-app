@@ -1,24 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My new app</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+{% block content %}
+
+<style>
+
+    h4 {
+        position: relative;
+    }
     
-</head>
+    .icons {
+        position: absolute;
+        right: 5px;
+    }
+    
+    
+    </style>
 
-<body>
-    <h1>Here are our notes</h1>
-    {% for note in notes %}
-        <p>{{ note }}</p>
-    {% endfor %}
-</body>
+    <div class="text-center mt-5">
+        <h2>To-Do List</h2>
+    </div>
+    
+    <hr />
+    <div class="row">
+        {% for note in to_do_list %}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>{{ note.title }} 
+                            <span class="badge badge-{{ note.get_label_display }}">
+                                {{ note.due_date }}
+                            </span>
+                        </h4>
+                        <span class="icons">
+                            <a href="{% url 'finish-note-item' note.id %}">
+                                <i class="fas fa-check-square"></i></a>
+                            <a href="#">
+                                <i class="fas fa-trash" style="color: red;"></i></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
 
-</html>
+        <div class="text-center mt-5">
+            <h2>Finshed List</h2>
+        </div>
+
+
+        <hr />
+
+        <div class="row">
+            {% for note in finished_list %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>{{ note.title }} 
+                                <span class="badge badge-{{ note.get_label_display }}">
+                                    {{ note.due_date }}
+                                </span>
+                            </h4>
+                            <span class="icons">
+                                <a href="">
+                                    <i class="fas fa-check-square"></i></a>
+                                <a href="#">
+                                    <i class="fas fa-trash" style="color: red;"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+    </div>
+    
+{% endblock content %}
